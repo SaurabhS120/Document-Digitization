@@ -1,6 +1,6 @@
-#define LED 13
+#define LED 2
 #define SCAN true
-#define IDLE false
+#define STOP false
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -10,50 +10,45 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 
 String a;
-bool state=IDLE;
+bool state=STOP;
 void changeState(bool s){
-  state=s;
-  if(s==SCAN){
+  if(s){
     digitalWrite(LED,HIGH);
+     Serial.println("SCAN");
   }else{
     digitalWrite(LED,LOW);
+    Serial.println("STOP");
   }
+  state=s;
 }
-void getUid(){
-  if(state==SCAN){
-      if ( ! mfrc522.PICC_IsNewCardPresent()) {
-      return;
-    }
-  
-    // Select one of the cards
-    if ( ! mfrc522.PICC_ReadCardSerial()) {
-      return;
-    }
-  
-    // Dump debug info about the card; PICC_HaltA() is automatically called
-    //mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
-    Serial.println();
-    for(int i=0;i<10;i++){
-      Serial.print(mfrc522.uid.uidByte[i]);
-    }
-    changeState(IDLE);
+bool getUid(){
+  // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
+  if ( ! mfrc522.PICC_IsNewCardPresent()) {
+    return false;
   }
+
+  // Select one of the cards
+  if ( ! mfrc522.PICC_ReadCardSerial()) {
+    return false;
+  }
+
+  // Dump debug info about the card; PICC_HaltA() is automatically called
+  for(int i=0;i<4;i++){
+    Serial.print(mfrc522.uid.uidByte[i],HEX);
+  }
+  Serial.println();
+  return true;
 }
 void setup() {
-
-  Serial.begin(9600); // opens serial port, sets data rate to 9600 bps
-
+  Serial.begin(9600);   // Initialize serial communications with the PC
   while (!Serial);    // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
   SPI.begin();      // Init SPI bus
-  mfrc522.PCD_Init();   // Init MFRC522
-  delay(4);       // Optional delay. Some board do need more time after init to be ready, see Readme
-  mfrc522.PCD_DumpVersionToSerial();  // Show details of PCD - MFRC522 Card Reader details
+  mfrc522.PCD_Init();   // Init 
   pinMode(LED,OUTPUT);
-  changeState(IDLE);
+  digitalWrite(LED,LOW);
 }
 
 void loop() {
-
   while(Serial.available()) {
   
     a= Serial.readString();// read the incoming data as string
@@ -63,13 +58,15 @@ void loop() {
       changeState(SCAN);
     }
     if(a.equals("stop")){
-      changeState(IDLE);
-    }
-    if(state==SCAN){
-      getUid();
+      changeState(STOP);
     }
   
   }
-    
+
+    if(state==SCAN){
+      if(getUid()){
+        changeState(STOP);
+      }
+    }
 
 }
