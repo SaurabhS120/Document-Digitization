@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2021 at 03:22 AM
+-- Generation Time: Jun 08, 2021 at 03:05 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -19,6 +19,16 @@ SET time_zone = "+00:00";
 --
 -- Database: `doc_digit`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blocked`
+--
+
+CREATE TABLE `blocked` (
+  `uid` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
