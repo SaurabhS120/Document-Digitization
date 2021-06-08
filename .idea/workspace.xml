@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a991ea41-8e8a-435b-9360-80d7eeeb0997" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Server code/doc_digit.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Server code/doc_digit.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python code/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
