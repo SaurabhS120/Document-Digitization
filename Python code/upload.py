@@ -9,6 +9,10 @@ def upload(uid,root_refresh):
     docname=tkinter.Entry(window1)
     docname.pack()
     def openFile():
+        if docname.get()=="":
+            from tkinter import messagebox
+            messagebox.showerror(title="File name blank",message="Please enter filename")
+            return
         filename=askopenfilename(title='choose document to upload',filetypes=[('image files','*.png;*.jpg;*.jpeg;*.bmp')])
         print(filename)
         import requests

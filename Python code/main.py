@@ -82,8 +82,8 @@ class RFIDScanner:
             return
 
 window=tkinter.Tk()
-rfidDetalis=RfidDetails()
-rfidScanner=RFIDScanner(rfidDetalis,window)
+#rfidDetalis=RfidDetails()
+#rfidScanner=RFIDScanner(rfidDetalis,window)
 def start_scan():
     rfidScanner.start_scan()
     wait()
@@ -94,9 +94,13 @@ def stop_scan():
     wait()
 stop_button=tkinter.Button(window,text="stop",command=stop_scan)
 stop_button.pack()
+import blocking
+def controls():
+    blocking.controls(window)
+blocking_button=tkinter.Button(window,text="Blocking",command=controls)
+blocking_button.pack()
 def close_event():
     rfidScanner.stop_scan()
-
     exit(0)
 window.protocol("WM_DELETE_WINDOW", close_event)
 print("starting...")
@@ -105,5 +109,6 @@ window.mainloop()
 window.destroy()
 window.quit()
 print(rfidDetalis.uid)
-import docs_list
-docs_list.show_docs(rfidDetalis.uid)
+if not blocking.isblocked(rfidDetalis.uid):
+    import docs_list
+    docs_list.show_docs(rfidDetalis.uid)
