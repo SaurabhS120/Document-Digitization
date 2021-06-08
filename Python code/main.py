@@ -82,8 +82,8 @@ class RFIDScanner:
             return
 
 window=tkinter.Tk()
-#rfidDetalis=RfidDetails()
-#rfidScanner=RFIDScanner(rfidDetalis,window)
+rfidDetalis=RfidDetails()
+rfidScanner=RFIDScanner(rfidDetalis,window)
 def start_scan():
     rfidScanner.start_scan()
     wait()
