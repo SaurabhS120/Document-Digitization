@@ -1,4 +1,4 @@
-import tkinter
+""" import tkinter
 import threading
 # Importing Libraries
 import serial
@@ -112,3 +112,6 @@ print(rfidDetalis.uid)
 if not blocking.isblocked(rfidDetalis.uid):
     import docs_list
     docs_list.show_docs(rfidDetalis.uid)
+ """
+import docs_list
+docs_list.show_docs('123')
