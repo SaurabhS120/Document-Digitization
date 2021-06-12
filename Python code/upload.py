@@ -18,6 +18,9 @@ def upload(uid,root_refresh):
         import requests
         url = 'http://localhost/upload.php'
         files = {'file': open(filename, 'rb')}
+        from AESCipher import AESCipher
+        enc=AESCipher('-J@NcRfU')
+        files=enc.encrypt(files)
         r = requests.post(url, files=files,data={"name":docname.get(),"uid":uid})
         print(r.text)
         window1.destroy()
