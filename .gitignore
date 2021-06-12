@@ -1,4 +1,3 @@
-.vscode/
-.idea/
-*.cpy
-.idea/workspace.xml
+.vscode/*
+.idea/*
+*.pyc
